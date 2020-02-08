@@ -12,20 +12,20 @@ script:
 before_install:
   - echo $TRAVIS_TAG
   - export DATE=`date +%Y%m%d`
-  - export VERSION="VirtualJudge-$DATE-$TRAVIS_TAG"
+  - export VERSION="$DATE-$TRAVIS_TAG"
   - echo $VERSION
   - sed -i "s/BUILD_VERSION_NAME/$VERSION/g" app/build.gradle
   - openssl aes-256-cbc -K $encrypted_e4c68a14ca8e_key -iv $encrypted_e4c68a14ca8e_iv
     -in android.jks.enc -out android.jks -d
   - yes | sdkmanager "platforms;android-29"
 before_deploy:
-  - mv app/build/outputs/apk/release/app-release.apk $VERSION.apk
+  - mv app/build/outputs/apk/release/app-release.apk VirtualJudge-$VERSION.apk
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: pYTFCoSGFy0uu5mXD776pEMM/A3xEy9grkDvPiBP5bXAZR+u8r6gy+JZqpTH5q2nrUt2ugMG9LrYHpKMYD2E6IlXg3JDcht+EVZRUR1IucI/bDJMbx6kFTGRksG8X2QKy+9WBmODMzWlhNEvW8EoFpgP23PUR8cUyQsdNrM/wz1SjWLV0Ib1n1L79syvDRsSay1rZslLkKLmRnicJK9lc1GQUfoDPlD0pzlDKlng19R5exCnUm2D0a0rgdTd+gT0VbGYHyLWPBOOjYoK+so61K9zSj35UKlkiz/jUjE3ZFUCiCPWv4xt5xW7GBvPi0wGhg/+jRW5iLcPLGH5m+argC7fID9EhaYlQ0pNqmX6sNbbLqVh9KkbAv7u6iowL+lmYCSVEmBGHkff2Ex+xEJnyQJtlXSgEtR6zV9x+qkTncmIo4bI1McifHwTq0W+lnLbAkWR2ewV6TYLoM5hykgaK5ZxYs4yYTqcZs4mBsgwwB+tVqUzKGbHC/wPf4JuzaC1kTl117kfTzqQxKALxHbYQmTYYktRdNuvo/Smy7pzc+iS35m8ynntHRKsgVHZKD4qSkxI2ZXgAPXnOJ5RAGqWb6hOWR8oUp0U/SIuP43PNuo9I1oRtVOIY77+qvT8OE9qC6PKEWoxGofbFZTFyO7Agn01ims9CrLmLcipU5Ajs1I=
-  file: $VERSION.apk
+  file: VirtualJudge-$VERSION.apk
   on:
     tags: true
     repo: VirtualJudge/VirtualJudgeApp
