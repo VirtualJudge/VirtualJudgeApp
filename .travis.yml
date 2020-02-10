@@ -11,7 +11,7 @@ script:
   - "./gradlew :app:assembleRelease"
 before_install:
   - echo $TRAVIS_TAG
-  - export DATE=`date +%Y%m%d`
+  - export DATE=`date -u +%Y%m%d`
   - export VERSION="$DATE-$TRAVIS_TAG"
   - echo $VERSION
   - sed -i "s/BUILD_VERSION_NAME/$VERSION/g" app/build.gradle
